@@ -6,6 +6,7 @@ const { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
 class Controller {
   constructor(actor) {
     this.actor = actor;
+    this.seed =  Math.floor(Math.random() * Math.floor(500));
     Services.obs.addObserver(this, "http-on-opening-request");
     Services.obs.addObserver(this, "document-on-opening-request");
   }
@@ -140,7 +141,7 @@ class Controller {
       }
       if (!stacktrace.length) return;
       stacktrace = stacktrace.join("\n");
-      this.actor.sendAsyncMessage("OpenWPM:Callstack", { stacktrace, channelId });
+      this.actor.sendAsyncMessage("OpenWPM:Callstack", { stacktrace, channelId , seed: this.seed});
       break;
     }
   }

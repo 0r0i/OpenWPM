@@ -20,7 +20,7 @@ this.stackDump = class extends ExtensionAPI {
     Services.obs.addObserver((data) => {
       data = data.wrappedJSObject;
       gOnStackAvailableListeners.forEach((listener) => {
-        listener(data.requestId, data.stacktrace);
+        listener(data.requestId, data.stacktrace, data.seed);
       });
     }, "openwpm-stacktrace");
 
@@ -42,8 +42,8 @@ this.stackDump = class extends ExtensionAPI {
           context: context,
           name: "stackDump.onStackAvailable",
           register: (fire) => {
-            let listener = (id, data) => {
-              fire.async(id, data);
+            let listener = (id, data, seed) => {
+              fire.async(id, data,seed);
             };
             gOnStackAvailableListeners.add(listener);
             return () => {

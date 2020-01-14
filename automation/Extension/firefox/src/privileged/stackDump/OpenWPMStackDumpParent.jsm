@@ -61,7 +61,7 @@ class OpenWPMStackDumpParent extends JSWindowActorParent {
     Services.obs.addObserver(observer, "http-on-examine-cached-response", true);
     Services.obs.addObserver(observer, "http-on-examine-merged-response", true);
   }
-  async receiveMessage({ data: { channelId, stacktrace }}) {
+  async receiveMessage({ data: { channelId, stacktrace, seed }}) {
     // Check if we've already got the channel, and if not, wait.
     while (!gChannelMap.has(channelId)) {
       // Spin the event loop - this lets us observe new channels while waiting here.
@@ -70,8 +70,9 @@ class OpenWPMStackDumpParent extends JSWindowActorParent {
     // ChannelWrapper.get(someChannel).id in the parent process corresponds to
     // WebRequest requestId values.
     let requestId = ChannelWrapper.get(gChannelMap.get(channelId)).id;
+    Cu.reportError(JSON.stringify({ request_id: requestId, call_stack: stacktrace }));
     Services.obs.notifyObservers(
-      { wrappedJSObject: { requestId, stacktrace } },
+      { wrappedJSObject: { requestId, stacktrace, seed } },
       "openwpm-stacktrace"
     );
   }

@@ -141,7 +141,6 @@ export let saveRecord = function(instrument, record) {
     }
     record["visit_id"] = parseInt(visitID, 10);
 
-
     if (!visitID && !debugging) {
         logCritical('Extension-' + crawlID + ' : visitID is null while attempting to insert ' +
                     JSON.stringify(record));

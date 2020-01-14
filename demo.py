@@ -2,10 +2,8 @@
 from automation import CommandSequence, TaskManager
 
 # The list of sites that we wish to crawl
-NUM_BROWSERS = 3
-sites = ['http://www.example.com',
-         'http://www.princeton.edu',
-         'http://citp.princeton.edu/']
+NUM_BROWSERS = 1
+sites = ['https://cnn.com']
 
 # Loads the default manager params
 # and NUM_BROWSERS copies of the default browser params
@@ -25,7 +23,7 @@ for i in range(NUM_BROWSERS):
     browser_params[i]['callstack_instrument'] = True
     # Enable flash for all three browsers
     browser_params[i]['disable_flash'] = True
-browser_params[0]['headless'] = True  # Launch only browser 0 headless
+# browser_params[0]['headless'] = True  # Launch only browser 0 headless
 
 # Update TaskManager configuration (use this for crawl-wide settings)
 manager_params['data_directory'] = '~/Desktop/'
